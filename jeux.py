@@ -5,8 +5,6 @@ class Morpion():
             ["","",""],
             ["","",""]
         ]
-        self.utilisateur="O"
-        self.ia="X"
     
     def __str__ (self):
         msg=""
@@ -46,20 +44,52 @@ class Morpion():
         """
         return self.possibilites() == []
 
-    def verifier_victoire(self):
+    def verifier_vainqueur(self):
         """
-        Pour vérifier les vainqueurs ont a fait quelque chose de plus originel que simplement des if et else 
-        On remplace les X par des 3 et les 0 par 3 
-        Ont fait les sommes des lignes, colonnes et diagonales : Si somme=9 (X vainqueur) et somme=15 (O vainqueur) 
+        On vérifie toutes les possibilités de victoire 
+        Renvoye le symbole du vainqueur ou alors None 
         """
-        pass
+        #Verification des lignes
+        if self.jeu[0][0]==self.jeu[0][1]==self.jeu[0][2]!="":
+            return True,self.jeu[0][0]
+        elif self.jeu[1][0]==self.jeu[1][1]==self.jeu[1][2]!="":
+            return True,self.jeu[1][0]
+        elif self.jeu[2][0]==self.jeu[2][1]==self.jeu[2][2]!="":
+            return True,self.jeu[2][0]
+
+        #Verification des colonnes
+        elif self.jeu[0][0]==self.jeu[1][0]==self.jeu[2][0]!="":
+            return True,self.jeu[0][0]
+        elif self.jeu[0][1]==self.jeu[1][1]==self.jeu[2][1]!="":
+            return True,self.jeu[0][1]
+        elif self.jeu[0][2]==self.jeu[1][2]==self.jeu[2][2]!="":
+            return True,self.jeu[0][2]
+
+        #Verification des diagonales
+        elif self.jeu[0][0]==self.jeu[1][1]==self.jeu[2][2]!="":
+            return True,self.jeu[0][0]
+        elif self.jeu[0][2]==self.jeu[1][1]==self.jeu[2][0]!="":
+            return True,self.jeu[0][0]
+        
+        #Résultat si il n'y a pas de vainqueur
+        else:
+            return False,None
 
     def fin_jeu(self):
-        pass
+        vainqueur=self.verifier_vainqueur()
+        if vainqueur[0]:
+            return True,vainqueur[1]
+        elif self.est_rempli():
+            return True,"Egalite"
+        else:
+            return False,"Continue"
 
 
 #Programme principal
 if __name__ == "__main__":
     morpion=Morpion()
+    utilisateur="O"
+    ia="X"
+
     print(morpion)
     print(morpion.possibilites())
