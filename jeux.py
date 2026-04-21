@@ -66,7 +66,7 @@ class Morpion():
         elif self.jeu[0][0]==self.jeu[1][1]==self.jeu[2][2]!="":
             return True,self.jeu[0][0]
         elif self.jeu[0][2]==self.jeu[1][1]==self.jeu[2][0]!="":
-            return True,self.jeu[0][0]
+            return True,self.jeu[0][2]
         
         #Résultat si il n'y a pas de vainqueur
         else:
@@ -94,14 +94,14 @@ class Morpion():
             return 0
         
 
-def situations_suivantes(plateau,joueur):
+def coups_prochains_possibles(plateau,joueur):
     """
     Renvoye un eliste comportant les coups possibles fait par l'adversaire dans son prochain coup
     """
     situations=[]
     coups_possibles=plateau.possibilites()
     for coup in coups_possibles:
-        prochain_plateau=Morpion(plateau.jeu)
+        prochain_plateau=Morpion([ligne[:] for ligne in plateau.jeu])
         prochain_plateau.jouer(joueur,coup)
         situations.append(prochain_plateau)
     return situations
@@ -114,11 +114,11 @@ def min_max(plateau,profondeur,joueur):
     if plateau.fin_jeu()[0] or profondeur==0:
         return plateau.evaluer()
     elif joueur=="X":
-        suivants=situations_suivantes(plateau,"O")
+        suivants=coups_prochains_possibles(plateau,"X")
         return max([min_max(suivant,profondeur-1,"O") for suivant in suivants])
     else:
-        suivants=situations_suivantes(plateau,"X")
-        return max([min_max(suivant,profondeur-1,"X") for suivant in suivants])
+        suivants=coups_prochains_possibles(plateau,"O")
+        return min([min_max(suivant,profondeur-1,"X") for suivant in suivants])
         
 
 
@@ -128,4 +128,4 @@ if __name__ == "__main__":
     morpion=Morpion([["X","","O"],["","X",""],["X","O","O"]])
 
 
-    print(min_max(morpion,3,"O"))
+    print(min_max(morpion,9,"X"))
