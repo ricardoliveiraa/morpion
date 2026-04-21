@@ -1,10 +1,13 @@
-class Morpion():
+class Arbre_possibilites():
     def __init__(self):
-        self.jeu=[
-            ["","",""],
-            ["","",""],
-            ["","",""]
-        ]
+        self.fils=[]
+
+    def ajouter_fils(self,noeud,score):
+        self.fils.append((noeud,score))
+
+class Morpion():
+    def __init__(self,jeu=[["","",""],["","",""],["","",""]]):
+        self.jeu=jeu
     
     def __str__ (self):
         msg=""
@@ -84,8 +87,10 @@ class Morpion():
         else:
             return False,"Continue"
 
+
 #Programme principal
 if __name__ == "__main__":
+    #Dans le jeu on va supposer que X correspond au programme et O l'utilisateur
     morpion=Morpion()
     utilisateur="O"
     ia="X"
