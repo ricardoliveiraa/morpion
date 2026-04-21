@@ -93,8 +93,8 @@ class Morpion():
         else:
             return 0
         
-
-def coups_prochains_possibles(plateau,joueur):
+# Algorithme MinMax
+'''def coups_prochains_possibles(plateau,joueur):
     """
     Renvoye un eliste comportant les coups possibles fait par l'adversaire dans son prochain coup
     """
@@ -104,6 +104,21 @@ def coups_prochains_possibles(plateau,joueur):
         prochain_plateau=Morpion([ligne[:] for ligne in plateau.jeu])
         prochain_plateau.jouer(joueur,coup)
         situations.append(prochain_plateau)
+        print(prochain_plateau)
+    return situations'''
+
+def coups_prochains_possibles(plateau,joueur):
+    """
+    Renvoye un eliste comportant les coups possibles fait par l'adversaire dans son prochain coup
+    """
+    situations=[]
+    coups_possibles=plateau.possibilites()
+    print(coups_possibles)
+    for coup in coups_possibles:
+        prochain_plateau=Morpion([ligne[:] for ligne in plateau.jeu])
+        prochain_plateau.jouer(joueur,coup)
+        situations.append(prochain_plateau)
+        print(prochain_plateau)
     return situations
             
 
