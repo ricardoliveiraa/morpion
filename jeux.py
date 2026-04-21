@@ -1,10 +1,3 @@
-class Arbre_possibilites():
-    def __init__(self):
-        self.fils=[]
-
-    def ajouter_fils(self,noeud,score):
-        self.fils.append((noeud,score))
-
 class Morpion():
     def __init__(self,jeu=[["","",""],["","",""],["","",""]]):
         self.jeu=jeu
@@ -39,7 +32,8 @@ class Morpion():
             joueur (str): Soit "X" soit "O" tout ça est géré dans la méthode général du jeu
             case (tuple): coordonnées de la case à jouer
         """
-        self.jeu[case[0]][case[1]] = joueur
+        i,j=case
+        self.jeu[i][j] = joueur
 
     def est_rempli(self):
         """
@@ -100,25 +94,38 @@ class Morpion():
             return 0
         
 
-def construire_arbre(self,profondeur):
+def situations_suivantes(plateau,joueur):
     """
-    Construit l'abre de possibilités à partir de ce plateau de la profondeur donné et renvoye l'arbre
+    Renvoye un eliste comportant les coups possibles fait par l'adversaire dans son prochain coup
     """
-    pass
+    situations=[]
+    coups_possibles=plateau.possibilites()
+    for coup in coups_possibles:
+        prochain_plateau=Morpion(plateau.jeu)
+        prochain_plateau.jouer(joueur,coup)
+        situations.append(prochain_plateau)
+    return situations
+            
 
 def min_max(plateau,profondeur,joueur):
     """
     Renvoye la valeur minmax (score de la branche de l'arbre de possibilités à choisir)
     """
-    pass
+    if plateau.fin_jeu()[0] or profondeur==0:
+        return plateau.evaluer()
+    elif joueur=="X":
+        suivants=situations_suivantes(plateau,"O")
+        return max([min_max(suivant,profondeur-1,"O") for suivant in suivants])
+    else:
+        suivants=situations_suivantes(plateau,"X")
+        return max([min_max(suivant,profondeur-1,"X") for suivant in suivants])
+        
 
 
 #Programme principal
 if __name__ == "__main__":
     #Dans le jeu on va supposer que X correspond au programme et O l'utilisateur
-    morpion=Morpion()
-    utilisateur="O"
-    ia="X"
+    morpion=Morpion([["X","","O"],["","X",""],["X","O","O"]])
 
-    print(morpion)
-    print(morpion.possibilites())
+
+    print(min_max(morpion,3,"O"))
