@@ -94,19 +94,7 @@ class Morpion():
             return 0
         
 # Algorithme MinMax
-'''def coups_prochains_possibles(plateau,joueur):
-    """
-    Renvoye un eliste comportant les coups possibles fait par l'adversaire dans son prochain coup
-    """
-    situations=[]
-    coups_possibles=plateau.possibilites()
-    for coup in coups_possibles:
-        prochain_plateau=Morpion([ligne[:] for ligne in plateau.jeu])
-        prochain_plateau.jouer(joueur,coup)
-        situations.append(prochain_plateau)
-        print(prochain_plateau)
-    return situations'''
-
+'''
 def coups_prochains_possibles(plateau,joueur):
     """
     Renvoye un eliste comportant les coups possibles fait par l'adversaire dans son prochain coup
@@ -115,12 +103,12 @@ def coups_prochains_possibles(plateau,joueur):
     coups_possibles=plateau.possibilites()
     print(coups_possibles)
     for coup in coups_possibles:
+        print(coup)
         prochain_plateau=Morpion([ligne[:] for ligne in plateau.jeu])
         prochain_plateau.jouer(joueur,coup)
         situations.append(prochain_plateau)
         print(prochain_plateau)
-    return situations
-            
+    return situations            
 
 def min_max(plateau,profondeur,joueur):
     """
@@ -134,7 +122,36 @@ def min_max(plateau,profondeur,joueur):
     else:
         suivants=coups_prochains_possibles(plateau,"O")
         return min([min_max(suivant,profondeur-1,"X") for suivant in suivants])
-        
+    '''
+
+def coups_prochains_possibles(plateau,joueur):
+    """
+    Renvoye un eliste comportant les coups possibles fait par l'adversaire dans son prochain coup
+    """
+    situations=[]
+    coups_possibles=plateau.possibilites()
+    print(coups_possibles)
+    for coup in coups_possibles:
+        print(coup)
+        prochain_plateau=Morpion([ligne[:] for ligne in plateau.jeu])
+        prochain_plateau.jouer(joueur,coup)
+        situations.append(prochain_plateau)
+        print(prochain_plateau)
+    return situations            
+
+def min_max(plateau,profondeur,joueur):
+    """
+    Renvoye la valeur minmax (score de la branche de l'arbre de possibilités à choisir)
+    """
+    if plateau.fin_jeu()[0] or profondeur==0:
+        print("NANI ?", plateau.possibilites())
+        return plateau.evaluer(), plateau.possibilites()
+    elif joueur=="X":
+        suivants=coups_prochains_possibles(plateau,"X")
+        return max([min_max(suivant,profondeur-1,"O") for suivant in suivants])
+    else:
+        suivants=coups_prochains_possibles(plateau,"O")
+        return min([min_max(suivant,profondeur-1,"X") for suivant in suivants])
 
 #Programme principal
 if __name__ == "__main__":
