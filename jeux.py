@@ -121,7 +121,6 @@ def min_max(plateau,profondeur,joueur):
         return min([min_max(suivant,profondeur-1,"X") for suivant in suivants])
         
 
-
 #Programme principal
 if __name__ == "__main__":
     #Dans le jeu on va supposer que X correspond au programme et O l'utilisateur
