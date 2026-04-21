@@ -87,6 +87,31 @@ class Morpion():
         else:
             return False,"Continue"
 
+    def evaluer(self):
+        """
+        Evalue le plateau actuel qui est une situation finale et attribut un score à ce plateau 
+        """
+        self.situation = self.fin_jeu()[1]
+        if self.situation == "X":
+            return 100
+        elif self.situation == "O":
+            return -100
+        else:
+            return 0
+        
+
+def construire_arbre(self,profondeur):
+    """
+    Construit l'abre de possibilités à partir de ce plateau de la profondeur donné et renvoye l'arbre
+    """
+    pass
+
+def min_max(plateau,profondeur,joueur):
+    """
+    Renvoye la valeur minmax (score de la branche de l'arbre de possibilités à choisir)
+    """
+    pass
+
 
 #Programme principal
 if __name__ == "__main__":
