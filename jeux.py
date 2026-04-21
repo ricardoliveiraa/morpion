@@ -20,7 +20,7 @@ class Morpion():
         
     def possibilites(self):
         """
-        Renvoie une liste de tuples qui corresponde à toutes les cases dis^ponibles pour jouer dessus
+        Renvoie une liste de tuples qui corresponde à toutes les cases disponibles pour jouer dessus
         """
         res=[]
         for i in range(3):
@@ -83,7 +83,6 @@ class Morpion():
             return True,"Egalite"
         else:
             return False,"Continue"
-
 
 #Programme principal
 if __name__ == "__main__":
