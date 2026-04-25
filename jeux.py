@@ -140,7 +140,7 @@ def meilleur_coup(plateau):
         # on évalue la suite avec minmax
         score = min_max(copie, 9, "O")
 
-        # si meilleur score → on garde
+        # si meilleur score : on garde
         if score > meilleur_score:
             meilleur_score = score
             meilleur_coup = coup
@@ -155,3 +155,4 @@ if __name__ == "__main__":
 
 
     print(min_max(morpion,9,"X"))
+    print(meilleur_coup(morpion))
