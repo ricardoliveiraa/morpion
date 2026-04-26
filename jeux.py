@@ -16,7 +16,7 @@ class Morpion():
         
     def possibilites(self):
         """
-        Renvoie une liste de tuples qui corresponde à toutes les cases disponibles pour jouer dessus
+        Renvoie une liste de tuples qui corresponde à toutes les cases vides
         """
         res=[]
         for i in range(3):
@@ -26,10 +26,10 @@ class Morpion():
         return res
 
     def jouer(self,joueur,case):
-        """_summary_
-
+        """
+        Remplis la case du plateau avec le symbole d'un joueur donné en paramètre
         Args:
-            joueur (str): Soit "X" soit "O" tout ça est géré dans la méthode général du jeu
+            joueur (str): Symbole du joueur
             case (tuple): coordonnées de la case à jouer
         """
         i,j=case
@@ -44,7 +44,7 @@ class Morpion():
     def verifier_vainqueur(self):
         """
         On vérifie toutes les possibilités de victoire 
-        Renvoye le symbole du vainqueur ou alors None 
+        Renvoie le symbole du vainqueur ou alors None s'il n'y a pas de vainqueur
         """
         #Verification des lignes
         if self.jeu[0][0]==self.jeu[0][1]==self.jeu[0][2]!="":
@@ -68,11 +68,14 @@ class Morpion():
         elif self.jeu[0][2]==self.jeu[1][1]==self.jeu[2][0]!="":
             return True,self.jeu[0][2]
         
-        #Résultat si il n'y a pas de vainqueur
+        #Résultat s'il n'y a pas de vainqueur
         else:
             return False,None
 
     def fin_jeu(self):
+        """
+        Renvoie l'état du jeu, s'il y a victoire, égalité ou si le jeu continue
+        """
         vainqueur=self.verifier_vainqueur()
         if vainqueur[0]:
             return True,vainqueur[1]
@@ -93,11 +96,13 @@ class Morpion():
         else:
             return 0
         
-# Algorithme MinMax
-
+#----------------------------- Algorithme MinMax-----------------------------------
 def coups_prochains_possibles(plateau,joueur):
     """
-    Renvoye un eliste comportant les coups possibles fait par l'adversaire dans son prochain coup
+    Renvoie une liste comportant les coups possibles fait par le joueur en paramètre lors de son tour
+    Args:
+        plateau (liste): plateau actuel
+        joueur (str): symbole du joueur
     """
     situations=[]
     coups_possibles=plateau.possibilites()
@@ -109,7 +114,11 @@ def coups_prochains_possibles(plateau,joueur):
 
 def min_max(plateau,profondeur,joueur):
     """
-    Renvoye la valeur minmax (score de la branche de l'arbre de possibilités à choisir)
+    Renvoie la valeur minmax (score de la branche de l'arbre de possibilités à choisir)
+    Args:
+        plateau (liste): plateau actuel
+        profondeur (int) : maximum d'appel de la fonction récursive 
+        joueur (str): symbole du joueur
     """
     if plateau.fin_jeu()[0] or profondeur == 0:
         return plateau.evaluer()
@@ -125,6 +134,8 @@ def meilleur_coup(plateau):
     """
     Renvoie le meilleur coup à jouer pour X (l'IA)
     sous la forme d'un tuple (i, j)
+    Args:
+        plateau (liste): plateau actuel
     """
     meilleur_score = -float("inf")
     meilleur_coup = None
@@ -147,12 +158,10 @@ def meilleur_coup(plateau):
 
     return meilleur_coup
 
-
-#Programme principal
+#-----------------------Programme principal------------------------------
 if __name__ == "__main__":
     #Dans le jeu on va supposer que X correspond au programme et O l'utilisateur
     morpion=Morpion([["X","","O"],["","X",""],["X","O","O"]])
-
 
     print(min_max(morpion,9,"X"))
     print(meilleur_coup(morpion))
