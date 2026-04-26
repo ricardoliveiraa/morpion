@@ -5,15 +5,17 @@ if __name__ == "__main__":
     
     def demande_case(plateau):
         print(plateau)
+        print("Cases vides restantes : " + str(plateau.possibilites()))
         ligne = int(input("Choisissez l'indice d'une ligne : "))
         colonne = int(input("Choisissez l'indice d'une colonne : "))
         return (ligne, colonne)
     
-    def verification_case_valide(case):
+    def verification_case_valide(case, plateau):
         assert len(case) == 2
         assert type(case) == tuple
         assert case[0] <= 2 and case[0] >= 0
         assert case[1] <= 2 and case[1] >= 0
+        assert case in plateau.possibilites(), "Cette case a déjà été choisi"
 
     def commencer_simulation():
         # Variables qui créer le jeu
@@ -24,7 +26,7 @@ if __name__ == "__main__":
         while fin_simulation == False : 
             # Tour de l'utilisateur de jouer : 
             case = demande_case(plateau)
-            verification_case_valide(case)
+            verification_case_valide(case, plateau)
             plateau.jouer(j_utilisateur, case)
             print(plateau)
 
@@ -33,20 +35,19 @@ if __name__ == "__main__":
 
             if fin_simulation == False : 
                 # Tour de l'IA de jouer : 
-                #plateau.jouer(j_ia, min_max(plateau, 9, j_ia))
-                print(plateau)
+                plateau.jouer(j_ia, meilleur_coup(plateau))
                 
             # Vérification si la partie se termine :
             fin_simulation = plateau.fin_jeu()[0]
 
         # Annonce de la fin de partie :
-        gagnant= plateau.fin_jeu[1]
+        print(plateau)
+        gagnant= plateau.fin_jeu()[1]
         if gagnant == j_ia :
             print("Vous avez perdu, retentez votre chance ;).")
         elif gagnant == j_utilisateur:
             print("Bien joué ! Vous avez gagné.")
         else : 
             print("Match nul.")
-
 
 commencer_simulation()
