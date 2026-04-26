@@ -52,7 +52,7 @@ def commencer_simulation():
     # Variables qui créer le jeu
     j_utilisateur = "O"
     j_ia = "X"
-    plateau = Morpion([["","X","O"],["","X",""],["","","O"]])
+    plateau = Morpion()
     fin_simulation = False
 
     while fin_simulation == False : 
