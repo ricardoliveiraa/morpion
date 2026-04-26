@@ -120,6 +120,8 @@ def min_max(plateau,profondeur,joueur):
         profondeur (int) : maximum d'appel de la fonction récursive 
         joueur (str): symbole du joueur
     """
+    min_max.compteur += 1
+
     if plateau.fin_jeu()[0] or profondeur == 0:
         return plateau.evaluer()
 
@@ -139,9 +141,12 @@ def meilleur_coup(plateau):
     """
     meilleur_score = -float("inf")
     meilleur_coup = None
+    rapidite = float("inf")
 
     # On teste tous les coups possibles
     for coup in plateau.possibilites():
+        min_max.compteur = 0
+
         # copie du plateau
         copie = Morpion([ligne[:] for ligne in plateau.jeu])
 
@@ -155,7 +160,13 @@ def meilleur_coup(plateau):
         if score > meilleur_score:
             meilleur_score = score
             meilleur_coup = coup
-
+            rapidite = min_max.compteur
+        # Si c'est le même score mais en moins de coups
+        elif score == meilleur_score and min_max.compteur<rapidite:
+            meilleur_score = score
+            meilleur_coup = coup
+            rapidite = min_max.compteur
+        
     return meilleur_coup
 
 #-----------------------Programme principal------------------------------
