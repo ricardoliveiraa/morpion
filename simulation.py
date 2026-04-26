@@ -5,7 +5,7 @@ def demande_case(plateau):
     Demande l'indice de la ligne et de la colonne à jouer
     Renvoie le tuple de la case à jouer
     Args : 
-        plateau (liste) : plateau actuel
+        plateau (Objet : Morpion) : plateau actuel
     """
     print(plateau)
     print("Cases vides restantes : " + str(plateau.possibilites()))
@@ -18,7 +18,7 @@ def verification_case_valide(case, plateau):
     Vérifie si la case donnée par le joueur est valide
     Args : 
         case (tuple) : case donnée par le joueur
-        plateau (list) : plateau actuel
+        plateau (Objet : Morpion) : plateau actuel
     """
     assert len(case) == 2
     assert type(case) == tuple
@@ -31,7 +31,7 @@ def fin_de_partie(plateau, j_utilisateur, j_ia):
     Renvoie un message de fin de partie en fonction de l'état du jeu : Egalité ou Victoire
     et en annonçant le vainqueur en cas de Victoire
     Args : 
-        plateau (list) : plateau actuel
+        plateau (Objet : Morpion) : plateau actuel
         j_utilisateur (str) : symbole de l'utilisateur
         j_ia (str) : symbole de l'ia
     """

@@ -101,7 +101,7 @@ def coups_prochains_possibles(plateau,joueur):
     """
     Renvoie une liste comportant les coups possibles fait par le joueur en paramètre lors de son tour
     Args:
-        plateau (liste): plateau actuel
+        plateau (Objet : Morpion): plateau actuel
         joueur (str): symbole du joueur
     """
     situations=[]
@@ -118,7 +118,7 @@ def min_max(plateau,profondeur,joueur):
     """
     Renvoie la valeur minmax (score de la branche de l'arbre de possibilités à choisir)
     Args:
-        plateau (liste): plateau actuel
+        plateau (Objet : Morpion): plateau actuel
         profondeur (int) : maximum d'appel de la fonction récursive 
         joueur (str): symbole du joueur
     """
@@ -140,7 +140,7 @@ def meilleur_coup(plateau):
     Renvoie le meilleur coup à jouer pour X (l'IA)
     sous la forme d'un tuple (i, j)
     Args:
-        plateau (liste): plateau actuel
+        plateau (Objet : Morpion): plateau actuel
     """
     global compteur
     meilleur_score = -float("inf")
