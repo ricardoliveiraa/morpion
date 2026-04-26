@@ -112,6 +112,8 @@ def coups_prochains_possibles(plateau,joueur):
         situations.append(prochain_plateau)
     return situations            
 
+compteur = 0
+
 def min_max(plateau,profondeur,joueur):
     """
     Renvoie la valeur minmax (score de la branche de l'arbre de possibilités à choisir)
@@ -120,7 +122,8 @@ def min_max(plateau,profondeur,joueur):
         profondeur (int) : maximum d'appel de la fonction récursive 
         joueur (str): symbole du joueur
     """
-    min_max.compteur += 1
+    global compteur
+    compteur += 1
 
     if plateau.fin_jeu()[0] or profondeur == 0:
         return plateau.evaluer()
@@ -139,13 +142,14 @@ def meilleur_coup(plateau):
     Args:
         plateau (liste): plateau actuel
     """
+    global compteur
     meilleur_score = -float("inf")
     meilleur_coup = None
     rapidite = float("inf")
 
     # On teste tous les coups possibles
     for coup in plateau.possibilites():
-        min_max.compteur = 0
+        compteur = 0
 
         # copie du plateau
         copie = Morpion([ligne[:] for ligne in plateau.jeu])
@@ -160,12 +164,12 @@ def meilleur_coup(plateau):
         if score > meilleur_score:
             meilleur_score = score
             meilleur_coup = coup
-            rapidite = min_max.compteur
+            rapidite = compteur
         # Si c'est le même score mais en moins de coups
-        elif score == meilleur_score and min_max.compteur<rapidite:
+        elif score == meilleur_score and compteur<rapidite:
             meilleur_score = score
             meilleur_coup = coup
-            rapidite = min_max.compteur
+            rapidite = compteur
         
     return meilleur_coup
 
@@ -174,5 +178,4 @@ if __name__ == "__main__":
     #Dans le jeu on va supposer que X correspond au programme et O l'utilisateur
     morpion=Morpion([["X","","O"],["","X",""],["X","O","O"]])
 
-    print(min_max(morpion,9,"X"))
     print(meilleur_coup(morpion))
