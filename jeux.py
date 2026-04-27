@@ -135,6 +135,32 @@ def min_max(plateau,profondeur,joueur):
         suivants = coups_prochains_possibles(plateau, "O")
         return min([min_max(suivant, profondeur-1, "X") for suivant in suivants])
 
+def alpha_beta(plateau,alpha,beta,profondeur,joueur):
+    global compteur
+    compteur += 1
+
+    if plateau.fin_jeu()[0] or profondeur == 0:
+        return plateau.evaluer()
+
+    if joueur == "O":
+        suivants = coups_prochains_possibles(plateau, "O")
+        v = float("inf")
+        for prochain in suivants:
+            v = min(v,alpha_beta(prochain,alpha,beta,profondeur-1,"X"))
+            if alpha >= v:
+                return v
+            beta = min(beta,v)
+        
+    else:
+        suivants = coups_prochains_possibles(plateau, "X")
+        v = -float("inf")
+        for prochain in suivants:
+            v = max(v,alpha_beta(prochain,alpha,beta,profondeur-1,"O"))
+            if v>=beta:
+                return v
+            alpha = max(alpha,v)
+    return v
+
 def meilleur_coup(plateau):
     """
     Renvoie le meilleur coup à jouer pour X (l'IA)
@@ -158,7 +184,7 @@ def meilleur_coup(plateau):
         copie.jouer("X", coup)
 
         # on évalue la suite avec minmax
-        score = min_max(copie, 9, "O")
+        score = alpha_beta(copie,-float("inf"),float("inf"), 9, "O")
 
         # si meilleur score : on garde
         if score > meilleur_score:
