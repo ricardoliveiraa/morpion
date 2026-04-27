@@ -122,15 +122,20 @@ def min_max(plateau,profondeur,joueur):
         profondeur (int) : maximum d'appel de la fonction récursive 
         joueur (str): symbole du joueur
     """
+    #Compteur pour départager en cas d'égalité
     global compteur
     compteur += 1
 
+    #Attribue un score à un plateau s'il représente une situation finale de jeu
     if plateau.fin_jeu()[0] or profondeur == 0:
         return plateau.evaluer()
 
+    #Attribue un score à un plateau s'il représente une situation finale de jeu
     if joueur == "X":
         suivants = coups_prochains_possibles(plateau, "X")
         return max([min_max(suivant, profondeur-1, "O") for suivant in suivants])
+
+    #Attribue un score pour une branche partant d'un coup de l'IA
     else:
         suivants = coups_prochains_possibles(plateau, "O")
         return min([min_max(suivant, profondeur-1, "X") for suivant in suivants])

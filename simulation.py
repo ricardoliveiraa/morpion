@@ -1,4 +1,5 @@
 # Importation 
+from time import time
 from jeux import *
 def demande_case(plateau):
     """
@@ -78,4 +79,16 @@ def commencer_simulation():
 # Prog Principal
 if __name__ == "__main__":
 
-    commencer_simulation()
+    #commencer_simulation()
+
+    t1=time()
+    min_max(Morpion(),9,"O")
+    t2=time()
+
+    print("Minmax a pris ce temps pour trouver la meilleur branche avec un plateau vide : ", str(t2-t1))
+    
+    t1=time()
+    alpha_beta(Morpion(),-float("inf"),float("inf"),9,"O")
+    t2=time()
+
+    print("Alphabeta a pris ce temps pour trouver le meilleur branche avec un plateau vide : ", str(t2-t1))
