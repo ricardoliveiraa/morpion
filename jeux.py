@@ -116,7 +116,7 @@ compteur = 0
 
 def min_max(plateau,profondeur,joueur):
     """
-    Renvoie la valeur minmax (score de la branche de l'arbre de possibilités à choisir)
+    Renvoie la valeur minmax : le score de la branche
     Args:
         plateau (Objet : Morpion): plateau actuel
         profondeur (int) : maximum d'appel de la fonction récursive 
@@ -135,13 +135,27 @@ def min_max(plateau,profondeur,joueur):
         suivants = coups_prochains_possibles(plateau, "O")
         return min([min_max(suivant, profondeur-1, "X") for suivant in suivants])
 
+
+# -------------------------- ALPHABETA ----------------------------------------
 def alpha_beta(plateau,alpha,beta,profondeur,joueur):
+    """
+    Renvoie le score de la branche en utilisant alphabeta (amélioration de minmax) 
+    Args:
+        plateau (Objet : Morpion): plateau actuel
+        alpha (int) : valeur permettant de bloquer la recherche dans une branche inutile dans un min
+        beta (int) : valeur permettant de bloquer la recherche dans une branche inutile dans un max
+        profondeur (int) : maximum d'appel de la fonction récursive 
+        joueur (str): symbole du joueur qui va jouer après
+    """
+    #Compteur pour départager en cas d'égalité
     global compteur
     compteur += 1
 
+    #Attribue un score à un plateau s'il représente une situation finale de jeu
     if plateau.fin_jeu()[0] or profondeur == 0:
         return plateau.evaluer()
 
+    #Attribue un score pour une branche partant d'un coup de l'utilisateur
     if joueur == "O":
         suivants = coups_prochains_possibles(plateau, "O")
         v = float("inf")
@@ -150,7 +164,8 @@ def alpha_beta(plateau,alpha,beta,profondeur,joueur):
             if alpha >= v:
                 return v
             beta = min(beta,v)
-        
+    
+    #Attribue un score pour une branche partant d'un coup de l'IA
     else:
         suivants = coups_prochains_possibles(plateau, "X")
         v = -float("inf")
