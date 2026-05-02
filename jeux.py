@@ -1,3 +1,4 @@
+from time import time
 class Morpion():
     def __init__(self,jeu=[["","",""],["","",""],["","",""]]):
         self.jeu=jeu
@@ -222,6 +223,17 @@ def meilleur_coup(plateau):
 #-----------------------Programme principal------------------------------
 if __name__ == "__main__":
     #Dans le jeu on va supposer que X correspond au programme et O l'utilisateur
-    morpion=Morpion([["X","","O"],["","X",""],["X","O","O"]])
+    print(Morpion([["O", "X", "O"], ["", "X", ""], ["", "", "O"]]))
+    print(Morpion([["O", "X", "O"], ["", "X", "X"], ["", "", "O"]]))
 
-    print(meilleur_coup(morpion))
+    t1=time()
+    min_max(Morpion(),9,"O")
+    t2=time()
+
+    print("Minmax a pris ce temps pour trouver la meilleur branche avec un plateau vide : ", str(t2-t1))
+    
+    t1=time()
+    alpha_beta(Morpion(),-float("inf"),float("inf"),9,"O")
+    t2=time()
+
+    print("Alphabeta a pris ce temps pour trouver le meilleur branche avec un plateau vide : ", str(t2-t1))
