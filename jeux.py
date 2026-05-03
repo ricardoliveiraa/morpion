@@ -220,20 +220,32 @@ def meilleur_coup(plateau):
         
     return meilleur_coup
 
+
+def moyenne_temps(k):
+    #Minmax
+    t1=time()
+    for _ in range(k):
+        min_max(Morpion(),9,'O')
+    t2=time()
+
+    temps_minmax=(t2-t1)/k
+
+    #Alphabeta
+    t1=time()
+    for _ in range(k):
+        alpha_beta(Morpion(),-float("inf"),float("inf"),9,"O")
+    t2=time()
+
+    temps_alphabeta=(t2-t1)/k
+
+    return temps_minmax,temps_alphabeta,temps_minmax/temps_alphabeta
+
+
 #-----------------------Programme principal------------------------------
 if __name__ == "__main__":
     #Dans le jeu on va supposer que X correspond au programme et O l'utilisateur
-    print(Morpion([["O", "X", "O"], ["", "X", ""], ["", "", "O"]]))
-    print(Morpion([["O", "X", "O"], ["", "X", "X"], ["", "", "O"]]))
-
-    t1=time()
-    min_max(Morpion(),9,"O")
-    t2=time()
-
-    print("Minmax a pris ce temps pour trouver la meilleur branche avec un plateau vide : ", str(t2-t1))
     
-    t1=time()
-    alpha_beta(Morpion(),-float("inf"),float("inf"),9,"O")
-    t2=time()
-
-    print("Alphabeta a pris ce temps pour trouver le meilleur branche avec un plateau vide : ", str(t2-t1))
+    temps = moyenne_temps(10)
+    print("En moyenne Minmax prend " + str(round(temps[0],4)) + " pour trouver le meilleur coup au début")
+    print("En moyenne Alphabeta prend " + str(round(temps[1],4)) + " pour trouver le meilleur coup au début")
+    print("Minmax prend en moyenne " + str(round(temps[2],3)) + " plus de temps que Minmax")
