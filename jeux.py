@@ -245,7 +245,7 @@ def moyenne_temps(k):
 if __name__ == "__main__":
     #Dans le jeu on va supposer que X correspond au programme et O l'utilisateur
     
-    temps = moyenne_temps(10)
-    print("En moyenne Minmax prend " + str(round(temps[0],4)) + " pour trouver le meilleur coup au début")
-    print("En moyenne Alphabeta prend " + str(round(temps[1],4)) + " pour trouver le meilleur coup au début")
+    temps = moyenne_temps(100)
+    print("En moyenne Minmax prend " + str(round(temps[0],4)) + " pour trouver le meilleur coup sur plateau vide")
+    print("En moyenne Alphabeta prend " + str(round(temps[1],4)) + " pour trouver le meilleur coup sur plateau vide")
     print("Minmax prend en moyenne " + str(round(temps[2],3)) + " plus de temps que Minmax")
